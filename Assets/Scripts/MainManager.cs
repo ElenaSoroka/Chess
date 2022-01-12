@@ -25,7 +25,7 @@ public class MainManager : MonoBehaviour
     public Toggle WhiteBlackToggle;
 
     public List<Player> playerList = new List<Player>(); //список имен игроков
-    public Player currentPlayer;
+    public Player currentPlayer = null;
     public bool whitePlayer;
 
 
@@ -35,6 +35,7 @@ public class MainManager : MonoBehaviour
         CreateInstance();
         LoadPlayerList();
         WhiteBlackSwitch();
+        //Debug.Log(currentPlayer);
     }
 
     public void WhiteBlackSwitch()
@@ -181,7 +182,15 @@ public class MainManager : MonoBehaviour
 
     public void StartPlay()
     {
-        SceneManager.LoadScene(1);
+        //Debug.Log(currentPlayer);
+        if (playerToChoose.value > 0)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            Debug.Log("Player must be selected!");
+        }
     }
     
 
