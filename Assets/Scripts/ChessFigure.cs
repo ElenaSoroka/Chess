@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class ChessFigure : MonoBehaviour
 {
-    //string[] colors = new string[2];
-    //colors[0] = "white";
-    //colors[1] = "black";
+    public class pieceLocation
+    {
+        public int[,] piecePos;
+    }
 
-    //int[] colors = new int[2];
-    //colors[0] = 1;
-    //colors[1] = 1;
 
-    public string pieceColor; //white / black
+    public static string[] colors = new string[2] { "white", "black" };
 
+    public string pieceColor; 
+    public static int pieceWeight; //*
+    public int pieceStartCount; //*
+    public List<int> pieceStartPos = new List<int>(); //*
+    public static pieceLocation pieceCurPos;
 
 
     // Start is called before the first frame update

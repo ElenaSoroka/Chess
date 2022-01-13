@@ -8,9 +8,12 @@ using System.IO;
 
 public class MainPlayManager : MonoBehaviour
 {
+    public static MainPlayManager Instance;
     public TextMeshProUGUI PlayerScoreText;
     public TextMeshProUGUI PlayerText;
 
+    public static int boardLength = 8;
+    public ChessFigure[,] chessBoard = new ChessFigure[boardLength, boardLength];
 
     public Pawn pawnWhitePref;
     public Rook rookWhitePref;
@@ -26,27 +29,45 @@ public class MainPlayManager : MonoBehaviour
     public King kingBlackPref;
     public Knight knightBlackPref;
 
-    Pawn[] pawnWhite = new Pawn[8];
-    Rook[] rookWhite = new Rook[2];
-    Bishop[] bishopWhite = new Bishop[2];
-    Queen queenWhite;
-    King kingWhite;
-    Knight[] knightWhite = new Knight[2];
+    //List<Pawn> pawnWhite = new List<Pawn>();
+    List<ChessFigure> pawnWhite = new List<ChessFigure>();
+    List<ChessFigure> rookWhite = new List<ChessFigure>();
+    List<ChessFigure> bishopWhite = new List<ChessFigure>();
+    List<ChessFigure> queenWhite = new List<ChessFigure>();
+    List<ChessFigure> kingWhite = new List<ChessFigure>();
+    List<ChessFigure> knightWhite = new List<ChessFigure>();
 
-    Pawn[] pawnBlack = new Pawn[8];
-    Rook[] rookBlack = new Rook[2];
-    Bishop[] bishopBlack = new Bishop[2];
-    Queen queenBlack;
-    King kingBlack;
-    Knight[] knightBlack = new Knight[2];
+    List<ChessFigure> pawnBlack = new List<ChessFigure>();
+    List<ChessFigure> rookBlack = new List<ChessFigure>();
+    List<ChessFigure> bishopBlack = new List<ChessFigure>();
+    List<ChessFigure> queenBlack = new List<ChessFigure>();
+    List<ChessFigure> kingBlack = new List<ChessFigure>();
+    List<ChessFigure> knightBlack = new List<ChessFigure>();
 
 
     // Start is called before the first frame update
+    void CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         PlayerScoreText.text = "Score: " + MainManager.Instance.currentPlayer.score[0] + " - " + MainManager.Instance.currentPlayer.score[1];
         PlayerText.text = "Player: " + MainManager.Instance.currentPlayer.name;
         primaryPiecesArrangement();
+    }
+
+    void Awake()
+    {
+        CreateInstance();
     }
 
     public void ExitGame()
@@ -55,24 +76,31 @@ public class MainPlayManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    void FillFigure(List<ChessFigure> figureType, ChessFigure prefObj, int row, float zPos, string color)
+    {
+        int i = 0;
+        do
+        {
+            figureType.Add(Instantiate(prefObj));
+            Vector3 pieceLoc = new Vector3(figureType[0].pieceStartPos[i], row, zPos);
+            figureType[i].transform.position = pieceLoc;
+            figureType[i].transform.rotation = prefObj.transform.rotation;
+            figureType[i].pieceColor = color;
+            chessBoard[(int)pieceLoc.x - 1, (int)pieceLoc.y - 1] = figureType[i];
+            i++;
+        }
+        while (i < figureType[0].pieceStartCount);
+    }
+
     void primaryPiecesArrangement()
     {
-        Vector3 pieceLocation;
         float zPos = -5.75f;
-        float rowWhite;
-        float rowWhitePawn;
-        float rowBlack;
-        float rowBlackPawn;
-
-        float rookPos1 = 1.0f;
-        float rookPos2 = 8.0f;
-        float bishopPos1 = 3.0f;
-        float bishopPos2 = 6.0f;
-        float knightPos1 = 2.0f;
-        float knightPos2 = 7.0f;
-        float queenPos = 4.0f;
-        float kingPos = 5.0f;
       
+        int rowWhite;
+        int rowWhitePawn;
+        int rowBlack;
+        int rowBlackPawn;
+
 
         if (MainManager.Instance.whitePlayer)
         {
@@ -90,67 +118,53 @@ public class MainPlayManager : MonoBehaviour
         }
 
 
+
         //White
-        for (int i = 1; i <= pawnWhite.Length; i++)
-        {
-            pieceLocation = new Vector3(i, rowWhitePawn, zPos);//pawnWhitePref.transform.position.z
-            pawnWhite[i-1] = Instantiate(pawnWhitePref, pieceLocation, pawnWhitePref.transform.rotation);
-        }
-        
-        pieceLocation = new Vector3(rookPos1, rowWhite, zPos);
-        rookWhite[0] = Instantiate(rookWhitePref, pieceLocation, rookWhitePref.transform.rotation);
-        pieceLocation = new Vector3(rookPos2, rowWhite, zPos);
-        rookWhite[1] = Instantiate(rookWhitePref, pieceLocation, rookWhitePref.transform.rotation);
+        string color = ChessFigure.colors[0];
 
-        pieceLocation = new Vector3(knightPos1, rowWhite, zPos);
-        knightWhite[0] = Instantiate(knightWhitePref, pieceLocation, knightWhitePref.transform.rotation);
-        pieceLocation = new Vector3(knightPos2, rowWhite, zPos);
-        knightWhite[1] = Instantiate(knightWhitePref, pieceLocation, knightWhitePref.transform.rotation);
+        FillFigure(pawnWhite, pawnWhitePref, rowWhitePawn, zPos, color); //pawns
+        FillFigure(rookWhite, rookWhitePref, rowWhite, zPos, color); //rooks
+        FillFigure(knightWhite, knightWhitePref, rowWhite, zPos, color); //knights
+        FillFigure(bishopWhite, bishopWhitePref, rowWhite, zPos, color); //bishops
+        FillFigure(queenWhite, queenWhitePref, rowWhite, zPos, color); //queen
+        FillFigure(kingWhite, kingWhitePref, rowWhite, zPos, color); //king
 
-        pieceLocation = new Vector3(bishopPos1, rowWhite, zPos);
-        bishopWhite[0] = Instantiate(bishopWhitePref, pieceLocation, bishopWhitePref.transform.rotation);
-        pieceLocation = new Vector3(bishopPos2, rowWhite, zPos);
-        bishopWhite[1] = Instantiate(bishopWhitePref, pieceLocation, bishopWhitePref.transform.rotation);
-
-        pieceLocation = new Vector3(queenPos, rowWhite, zPos);
-        queenWhite = Instantiate(queenWhitePref, pieceLocation, queenWhitePref.transform.rotation);
-
-        pieceLocation = new Vector3(kingPos, rowWhite, zPos);
-        kingWhite = Instantiate(kingWhitePref, pieceLocation, kingWhitePref.transform.rotation);
 
         //Black
-        for (int i = 1; i <= pawnBlack.Length; i++)
+        color = ChessFigure.colors[1];
+
+        FillFigure(pawnBlack, pawnBlackPref, rowBlackPawn, zPos, color); //pawns
+        FillFigure(rookBlack, rookBlackPref, rowBlack, zPos, color); //rooks
+        FillFigure(knightBlack, knightBlackPref, rowBlack, zPos, color); //knights
+        FillFigure(bishopBlack, bishopBlackPref, rowBlack, zPos, color); //bishops
+        FillFigure(queenBlack, queenBlackPref, rowBlack, zPos, color); //queen
+        FillFigure(kingBlack, kingBlackPref, rowBlack, zPos, color); //king
+        
+    }
+
+    void PrintBoard()
+    {
+        for (int y = 0; y <= boardLength - 1; y++)
         {
-            pieceLocation = new Vector3(i, rowBlackPawn, zPos);//pawnWhitePref.transform.position.z
-            pawnBlack[i - 1] = Instantiate(pawnBlackPref, pieceLocation, pawnBlackPref.transform.rotation);
+            string row = "| ";
+            for (int x = 0; x <= boardLength - 1; x++)
+            {
+                if (chessBoard[x, y] == null)
+                {
+                    row = row + "*" + " | ";
+                }
+                else
+                {
+                    row = row + chessBoard[x, y] + " | ";
+                }
+            }
+            Debug.Log(row);
         }
-
-        pieceLocation = new Vector3(rookPos1, rowBlack, zPos);
-        rookBlack[0] = Instantiate(rookBlackPref, pieceLocation, rookBlackPref.transform.rotation);
-        pieceLocation = new Vector3(rookPos2, rowBlack, zPos);
-        rookBlack[1] = Instantiate(rookBlackPref, pieceLocation, rookBlackPref.transform.rotation);
-
-        pieceLocation = new Vector3(knightPos1, rowBlack, zPos);
-        knightBlack[0] = Instantiate(knightBlackPref, pieceLocation, knightBlackPref.transform.rotation);
-        pieceLocation = new Vector3(knightPos2, rowBlack, zPos);
-        knightBlack[1] = Instantiate(knightBlackPref, pieceLocation, knightBlackPref.transform.rotation);
-
-        pieceLocation = new Vector3(bishopPos1, rowBlack, zPos);
-        bishopBlack[0] = Instantiate(bishopBlackPref, pieceLocation, bishopBlackPref.transform.rotation);
-        pieceLocation = new Vector3(bishopPos2, rowBlack, zPos);
-        bishopBlack[1] = Instantiate(bishopBlackPref, pieceLocation, bishopBlackPref.transform.rotation);
-
-        pieceLocation = new Vector3(queenPos, rowBlack, zPos);
-        queenBlack = Instantiate(queenBlackPref, pieceLocation, queenBlackPref.transform.rotation);
-
-        pieceLocation = new Vector3(kingPos, rowBlack, zPos);
-        kingBlack = Instantiate(kingBlackPref, pieceLocation, kingBlackPref.transform.rotation);
-
     }
 
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
         
     }
