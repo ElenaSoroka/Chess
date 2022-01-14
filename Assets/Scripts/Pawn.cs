@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Pawn : ChessFigure
 {
     int rowWhite;
@@ -22,7 +23,7 @@ public class Pawn : ChessFigure
         PossibleMoves();
     }
 
-    public override void PossibleMoves()
+    public override void PossibleMoves() // POLYMORPHISM
     {
         //я упростила для прототипа, ибо пешка не идет назад, но второй вектор для верхнего ряда
         motionVector.Add(new Vector2(0, 1));

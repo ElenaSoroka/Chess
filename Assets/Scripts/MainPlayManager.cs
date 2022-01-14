@@ -92,7 +92,7 @@ public class MainPlayManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    void FillFigure(List<ChessFigure> figureType, ChessFigure prefObj, int row, float zPos, string color)
+    void FillFigure(List<ChessFigure> figureType, ChessFigure prefObj, int row, float zPos, string color) // ABSTRACTION
     {
         int i = 0;
         do
@@ -138,6 +138,7 @@ public class MainPlayManager : MonoBehaviour
         //White
         string color = ChessFigure.colors[0];
 
+        // ABSTRACTION
         FillFigure(pawnWhite, pawnWhitePref, rowWhitePawn, zPos, color); //pawns
         FillFigure(rookWhite, rookWhitePref, rowWhite, zPos, color); //rooks
         FillFigure(knightWhite, knightWhitePref, rowWhite, zPos, color); //knights
@@ -149,6 +150,7 @@ public class MainPlayManager : MonoBehaviour
         //Black
         color = ChessFigure.colors[1];
 
+        // ABSTRACTION
         FillFigure(pawnBlack, pawnBlackPref, rowBlackPawn, zPos, color); //pawns
         FillFigure(rookBlack, rookBlackPref, rowBlack, zPos, color); //rooks
         FillFigure(knightBlack, knightBlackPref, rowBlack, zPos, color); //knights

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Rook : ChessFigure
 {
     // Start is called before the first frame update
@@ -15,7 +16,7 @@ public class Rook : ChessFigure
         PossibleMoves();
     }
 
-    public override void PossibleMoves()
+    public override void PossibleMoves() // POLYMORPHISM
     {
         motionVector.Add(new Vector2(7, 0));
         motionVector.Add(new Vector2(6, 0));
