@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Knight : ChessFigure
 {
     // Start is called before the first frame update
@@ -15,7 +16,7 @@ public class Knight : ChessFigure
         PossibleMoves();
     }
 
-    public override void PossibleMoves()
+    public override void PossibleMoves() // POLYMORPHISM
     {
         motionVector.Add(new Vector2(2, 1));
         motionVector.Add(new Vector2(2, -1));

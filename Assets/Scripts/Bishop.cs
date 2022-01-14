@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Bishop : ChessFigure
 {
     // Start is called before the first frame update
-    void Awake()
+    void Awake() 
     {
+        
         pieceWeight = 300;
         pieceStartCount = 2;
 
@@ -15,7 +17,7 @@ public class Bishop : ChessFigure
         PossibleMoves();
     }
 
-    public override void PossibleMoves()
+    public override void PossibleMoves() // POLYMORPHISM
     {
         motionVector.Add(new Vector2(7, 7));
         motionVector.Add(new Vector2(6, 6));

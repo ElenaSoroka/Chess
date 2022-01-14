@@ -66,7 +66,7 @@ public abstract class ChessFigure : MonoBehaviour
 
     }
 
-    bool WayFree(int x1, int y1, int x2, int y2)
+    bool WayFree(int x1, int y1, int x2, int y2) // ABSTRACTION
     {
         int xMin;
         int xMax;
