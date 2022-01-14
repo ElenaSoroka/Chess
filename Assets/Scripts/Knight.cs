@@ -12,11 +12,18 @@ public class Knight : ChessFigure
 
         pieceStartPos.Add(2);
         pieceStartPos.Add(7);
+        PossibleMoves();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void PossibleMoves()
     {
-        
+        motionVector.Add(new Vector2(2, 1));
+        motionVector.Add(new Vector2(2, -1));
+        motionVector.Add(new Vector2(-2, 1));
+        motionVector.Add(new Vector2(-2, -1));
+        motionVector.Add(new Vector2(1, 2));
+        motionVector.Add(new Vector2(1, -2));
+        motionVector.Add(new Vector2(-1, 2));
+        motionVector.Add(new Vector2(-1, -2));
     }
 }

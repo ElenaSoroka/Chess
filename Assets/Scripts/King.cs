@@ -11,11 +11,24 @@ public class King : ChessFigure
         pieceStartCount = 1;
 
         pieceStartPos.Add(5);
+        PossibleMoves();
     }
 
-    // Update is called once per frame
-    void Update()
+    //private void OnMouseDown()
+    //{
+    //    Debug.Log("mouse king");
+
+    //}
+
+    public override void PossibleMoves()
     {
-        
+        motionVector.Add(new Vector2(1, 0));
+        motionVector.Add(new Vector2(1, 1));
+        motionVector.Add(new Vector2(0, 1));
+        motionVector.Add(new Vector2(-1, 0));
+        motionVector.Add(new Vector2(-1, -1));
+        motionVector.Add(new Vector2(0, -1));
+        motionVector.Add(new Vector2(-1, 1));
+        motionVector.Add(new Vector2(1, -1));
     }
 }

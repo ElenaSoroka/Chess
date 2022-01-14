@@ -202,6 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4881596161246689617}
   - component: {fileID: -2797232429093078642}
+  - component: {fileID: 3202862869318718263}
   m_Layer: 0
   m_Name: knightWhite
   m_TagString: Untagged
@@ -237,3 +238,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2643bb162aa67c74e9325af8016e222e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pieceColor: 
+  pieceStartCount: 0
+  pieceStartPos: 
+  pieceCurPos: {x: 0, y: 0}
+  motionVector: []
+--- !u!65 &3202862869318718263
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881596161246689630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.80454135, y: 0.80454135, z: 0.3135677}
+  m_Center: {x: 0, y: 0, z: 0.0011634529}

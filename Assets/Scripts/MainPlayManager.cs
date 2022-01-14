@@ -13,7 +13,8 @@ public class MainPlayManager : MonoBehaviour
     public TextMeshProUGUI PlayerText;
 
     public static int boardLength = 8;
-    public ChessFigure[,] chessBoard = new ChessFigure[boardLength, boardLength];
+    public static float zPos = -5.75f;
+    public static ChessFigure[,] chessBoard = new ChessFigure[boardLength, boardLength];
 
     public Pawn pawnWhitePref;
     public Rook rookWhitePref;
@@ -29,7 +30,10 @@ public class MainPlayManager : MonoBehaviour
     public King kingBlackPref;
     public Knight knightBlackPref;
 
-    //List<Pawn> pawnWhite = new List<Pawn>();
+    public GameObject greenDotPref;
+
+    bool whiteGame;
+
     List<ChessFigure> pawnWhite = new List<ChessFigure>();
     List<ChessFigure> rookWhite = new List<ChessFigure>();
     List<ChessFigure> bishopWhite = new List<ChessFigure>();
@@ -45,6 +49,9 @@ public class MainPlayManager : MonoBehaviour
     List<ChessFigure> knightBlack = new List<ChessFigure>();
 
 
+    public List<GameObject> greenDotList = new List<GameObject>();
+
+
     // Start is called before the first frame update
     void CreateInstance()
     {
@@ -55,13 +62,23 @@ public class MainPlayManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
+
+
 
     void Start()
     {
-        PlayerScoreText.text = "Score: " + MainManager.Instance.currentPlayer.score[0] + " - " + MainManager.Instance.currentPlayer.score[1];
-        PlayerText.text = "Player: " + MainManager.Instance.currentPlayer.name;
+        if (MainManager.Instance != null)
+        {
+            PlayerScoreText.text = "Score: " + MainManager.Instance.currentPlayer.score[0] + " - " + MainManager.Instance.currentPlayer.score[1];
+            PlayerText.text = "Player: " + MainManager.Instance.currentPlayer.name;
+            whiteGame = MainManager.Instance.whitePlayer;
+        }
+        else 
+        {
+            whiteGame = true;
+        }
         primaryPiecesArrangement();
     }
 
@@ -72,7 +89,6 @@ public class MainPlayManager : MonoBehaviour
 
     public void ExitGame()
     {
-        Debug.Log("Exit");
         SceneManager.LoadScene(0);
     }
 
@@ -86,6 +102,7 @@ public class MainPlayManager : MonoBehaviour
             figureType[i].transform.position = pieceLoc;
             figureType[i].transform.rotation = prefObj.transform.rotation;
             figureType[i].pieceColor = color;
+            figureType[i].pieceCurPos = new Vector2(pieceLoc.x, pieceLoc.y);
             chessBoard[(int)pieceLoc.x - 1, (int)pieceLoc.y - 1] = figureType[i];
             i++;
         }
@@ -94,7 +111,6 @@ public class MainPlayManager : MonoBehaviour
 
     void primaryPiecesArrangement()
     {
-        float zPos = -5.75f;
       
         int rowWhite;
         int rowWhitePawn;
@@ -102,7 +118,7 @@ public class MainPlayManager : MonoBehaviour
         int rowBlackPawn;
 
 
-        if (MainManager.Instance.whitePlayer)
+        if (whiteGame)
         {
             rowWhite = 1;
             rowWhitePawn = 2;
@@ -162,10 +178,4 @@ public class MainPlayManager : MonoBehaviour
         }
     }
 
-
-// Update is called once per frame
-void Update()
-    {
-        
-    }
 }

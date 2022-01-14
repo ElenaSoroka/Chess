@@ -19,14 +19,13 @@ public class Pawn : ChessFigure
         {
             pieceStartPos.Add(i);
         }
-
+        PossibleMoves();
     }
 
-
-
-    // Update is called once per frame
-    void Update()
+    public override void PossibleMoves()
     {
-        
+        //я упростила для прототипа, ибо пешка не идет назад, но второй вектор для верхнего ряда
+        motionVector.Add(new Vector2(0, 1));
+        motionVector.Add(new Vector2(0, -1));
     }
 }

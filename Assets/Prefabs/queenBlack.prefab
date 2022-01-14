@@ -202,6 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8433008733869880059}
   - component: {fileID: 6066799680255151640}
+  - component: {fileID: 7206308366939632171}
   m_Layer: 0
   m_Name: queenBlack
   m_TagString: Untagged
@@ -237,3 +238,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0c750e1673de24ba25f9bbd58d4701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pieceColor: 
+  pieceStartCount: 0
+  pieceStartPos: 
+  pieceCurPos: {x: 0, y: 0}
+  motionVector: []
+--- !u!65 &7206308366939632171
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433008733869880058}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8193803, y: 0.8222985, z: 0.43904045}
+  m_Center: {x: 0.005820036, y: 0.00068736076, z: -0.0015531033}
